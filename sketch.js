@@ -88,16 +88,14 @@ function setup() {
 
 function draw() {
 
-    background(0);
-    rotateX(-PI / 2);
-    var projected3d = [];
-
-	stroke(255, 200);
-	noStroke();
+    background(220);
+	strokeWeight(3);
+	stroke(10);
 	noFill();
 
-	var transform = transformStack();
-	
+    var projected3d = [];
+	var transform   = transformStack();
+
     for (var i = 0; i < points.length; i++) {
 		
 		// Transform chain
@@ -111,14 +109,10 @@ function draw() {
         var proj = projectionMatrix(w);
         var projected = proj.mult(rotated).mult(width / 10);
         projected3d[i] = projected.mtx;
-        
-        point(projected.get(0,0), projected.get(1,0), projected.get(2,0));
 				
     }
 	
     // Connecting
-	strokeWeight(4);
-    stroke(255);
 	for (var o = 0; o <= 8; o += 8)
 		for (var i = 0; i < 4; i++) {
 			connect(o, i, (i + 1) % 4, projected3d);
@@ -173,7 +167,7 @@ function cycleAngles(d) {
 function resetAngle(i, j, val) {
 	if (val == null)
 		val = 0;
-	sliders[i][j].value(map(val, 0, 2 * PI, -1, 1));
+	sliders[i][j].value(map(val, -2 * PI, 2 * PI, -1, 1));
 	angles[i][j] = val;
 	rotationMatrices[i][j] = rotationMatrix([i,j], val);
 }
